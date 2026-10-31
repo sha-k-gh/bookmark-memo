@@ -769,7 +769,7 @@ convertButtons.forEach(function (button, i) {
         const hash = "#" + encodeURIComponent(memos[i].value);
         if (urlMode) {
             history.replaceState(0, 0, hash);
-            showToast("Bookmark this page", 5000);
+            showToast("このページをブックマークしてください", 3500);
         } else {
             window.open(location.href.split("#")[0] + hash, "_blank");
         }
@@ -789,7 +789,7 @@ copyButtons.forEach(function (button, i) {
             document.execCommand("copy");
             memoArea.blur();
         }
-        showToast("Copied", 2000);
+        showToast("コピーしました", 2000);
     };
 });
 
@@ -1531,7 +1531,7 @@ window.onload = function () {
     setInterval(updateDateLabels, 10000);
     updateTitle();
     currentMemo.focus();
-    if (urlMode) {
+    if (urlMode && window.opener) {
         showToast("このページをブックマークしてください", 3500);
     }
     pushHistory();
