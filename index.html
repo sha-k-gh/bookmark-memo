@@ -853,6 +853,47 @@ document.querySelectorAll(".ft").forEach(function (ft) {
     narrowObserver.observe(ft);
 });
 
+const fitPortrait = window.matchMedia("(orientation: portrait)");
+const fitCoarse = window.matchMedia("(pointer: coarse)");
+let fitWidth = window.innerWidth;
+
+function fitMemoHeight() {
+    if (!(fitCoarse.matches && fitPortrait.matches)) {
+        memos.forEach(function (memoArea) {
+            memoArea.style.height = "";
+        });
+        return;
+    }
+    const area = memos.find(function (memoArea) {
+        return memoArea.parentNode.style.display !== "none";
+    });
+    if (!area) {
+        return;
+    }
+    const ft = area.parentNode.querySelector(".ft");
+    const top = area.getBoundingClientRect().top + window.scrollY;
+    const marginTop = parseFloat(getComputedStyle(ft).marginTop) || 0;
+    const h = Math.max(120, Math.floor(window.innerHeight - top - ft.offsetHeight - marginTop - 6));
+    memos.forEach(function (memoArea) {
+        memoArea.style.height = h + "px";
+    });
+}
+
+const fitObserver = new ResizeObserver(fitMemoHeight);
+fitObserver.observe(bar);
+document.querySelectorAll(".ft").forEach(function (ft) {
+    fitObserver.observe(ft);
+});
+window.addEventListener("load", fitMemoHeight);
+window.addEventListener("resize", function () {
+    const sameWidth = window.innerWidth === fitWidth;
+    fitWidth = window.innerWidth;
+    if (sameWidth && fitCoarse.matches && document.activeElement && document.activeElement.tagName === "TEXTAREA") {
+        return;
+    }
+    fitMemoHeight();
+});
+
 const dateFormats = {
     tsYMDHM: function (d) {
         return d.getFullYear() + "/" + pad(d.getMonth() + 1) + "/" + pad(d.getDate())
