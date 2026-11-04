@@ -1536,6 +1536,12 @@ window.onload = function () {
     }
     pushHistory();
 };
+
+window.addEventListener("hashchange", function () {
+    if (location.hash.length > 1 || urlMode) {
+        location.reload();
+    }
+});
 </script>
 </body>
 </html>
