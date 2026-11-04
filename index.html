@@ -210,9 +210,11 @@ body {
     filter: brightness(115%);
 }
 
-#listOn + .ts-check-icon,
-#tsEnterMode + .ts-check-icon {
-    border-radius: 8px;
+#tsSpace + .ts-check-icon,
+#tsAfter + .ts-check-icon,
+#tsNewline + .ts-check-icon,
+#tsSpaceHead + .ts-check-icon {
+    border-radius: 6px;
 }
 
 #r1 {
@@ -593,8 +595,9 @@ color: #757575;
     </div>
 
 
+
+
     <div class="ts-group" id="timeBar">
-        <label class="ts-check-label"><input type="checkbox" id="tsEnterMode"><span class="ts-check-icon ts-icon-clock"></span></label>
         <label class="ts-check-label"><input type="checkbox" id="tsNewline"><span class="ts-check-icon">↵</span></label>
                 <label class="ts-check-label"><input type="checkbox" id="tsSpaceHead"><span class="ts-check-icon">␣</span></label>
                 <button class="ts-btn" id="tsYMDHM"></button>
@@ -604,6 +607,7 @@ color: #757575;
         <button class="ts-btn" id="tsHM"></button>
         <label class="ts-check-label"><input type="checkbox" id="tsSpace"><span class="ts-check-icon">␣</span></label>
         <label class="ts-check-label"><input type="checkbox" id="tsAfter"><span class="ts-check-icon">↵</span></label>
+        <label class="ts-check-label"><input type="checkbox" id="tsEnterMode"><span class="ts-check-icon ts-icon-clock"></span></label>
     </div>
 
     <div class="ts-group" id="listBar">
