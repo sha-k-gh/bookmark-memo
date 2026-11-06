@@ -966,12 +966,13 @@ for (const id in dateFormats) {
 let tsEnterId = "";
 
 function saveEnterMode() {
+    if (urlMode) return;
     saveSetting("bookmarkMemo.ent" + memos.indexOf(currentMemo),
         (byId("tsEnterMode").checked ? "1" : "0") + tsEnterId);
 }
 
 function loadEnterMode() {
-    const v = loadSetting("bookmarkMemo.ent" + memos.indexOf(currentMemo), "0");
+    const v = urlMode ? "0" : loadSetting("bookmarkMemo.ent" + memos.indexOf(currentMemo), "0");
     byId("tsEnterMode").checked = (v[0] === "1");
     tsEnterId = dateFormats[v.slice(1)] ? v.slice(1) : "";
     applyTsEnterUI();
@@ -1014,6 +1015,7 @@ memos.forEach(function (memoArea) {
 });
 
 function saveListMode() {
+    if (urlMode) return;
     saveSetting("bookmarkMemo.list" + memos.indexOf(currentMemo), byId("listOn").checked ? "1" : "0");
 }
 
@@ -1022,7 +1024,8 @@ function loadListMode() {
     if (!byId("listSelect").value) {
         byId("listSelect").value = "bullet";
     }
-    byId("listOn").checked = loadSetting("bookmarkMemo.list" + memos.indexOf(currentMemo), "0") === "1"
+    byId("listOn").checked = !urlMode
+        && loadSetting("bookmarkMemo.list" + memos.indexOf(currentMemo), "0") === "1"
         && !byId("tsEnterMode").checked;
     byId("listNumber").value = loadSetting("bookmarkMemo.listNum" + memos.indexOf(currentMemo), "1");
     updateListNumberUI();
@@ -1287,6 +1290,7 @@ fontNumber.parentNode.addEventListener("wheel", function (e) {
 const checkIds = ["tsNewline", "tsSpaceHead", "tsSpace", "tsAfter"];
 
 function saveChecks() {
+    if (urlMode) return;
     const bits = checkIds.map(function (id) {
         return byId(id).checked ? 1 : 0;
     }).join("");
@@ -1294,7 +1298,7 @@ function saveChecks() {
 }
 
 function loadChecks() {
-    const bits = loadSetting("bookmarkMemo.ck" + memos.indexOf(currentMemo), "0000");
+    const bits = urlMode ? "0000" : loadSetting("bookmarkMemo.ck" + memos.indexOf(currentMemo), "0000");
     checkIds.forEach(function (id, j) {
         byId(id).checked = (bits[j] === "1");
     });
